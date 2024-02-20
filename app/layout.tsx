@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider"
+import { cn } from "@/lib/utils";
+import Navbar from "@/components/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +18,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="h-full">
+      <head />
+      <body className={cn("relative h-full font-sans antialiased", inter.className)}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <main className="relative min-h-screen flex flex-col">
+            <Navbar/>
+            <div className="flex-grow flex-1">{children}</div>
+          </main>
+          
+        </ThemeProvider>
+
+      </body>
     </html>
   );
 }
